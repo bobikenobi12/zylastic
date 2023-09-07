@@ -18,6 +18,7 @@ import {
 	Input,
 } from "@chakra-ui/react";
 import { RepeatClockIcon } from "@chakra-ui/icons";
+import useStoreUserEffect from "../hooks/useStoreUserEffect";
 
 const stats = {
 	strength: 0,
@@ -31,6 +32,8 @@ const stats = {
 };
 
 export default function CardCreator() {
+	const userId = useStoreUserEffect();
+
 	return (
 		<Flex
 			align="center"
@@ -43,7 +46,7 @@ export default function CardCreator() {
 			<Box w={["100%", "50%"]}>
 				<FormControl id="prompt">
 					<FormLabel>Prompt</FormLabel>
-					<Input size={"lg"} />
+					<Input size={"lg"} disabled={userId === null} />
 				</FormControl>
 				<Tooltip label="Auto generate card stats">
 					<IconButton
