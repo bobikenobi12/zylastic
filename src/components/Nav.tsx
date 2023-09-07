@@ -11,7 +11,7 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 import { AuthLoading, Authenticated, Unauthenticated } from "convex/react";
-import { UserButton, SignInButton, SignOutButton } from "@clerk/clerk-react";
+import { UserButton, SignInButton } from "@clerk/clerk-react";
 import { dark } from "@clerk/themes";
 
 import { Outlet } from "react-router-dom";
@@ -79,8 +79,6 @@ export default function Nav() {
 							<Spinner />
 						</AuthLoading>
 						<Authenticated>
-							<SignOutButton />
-
 							<UserButton
 								appearance={{
 									baseTheme: useColorModeValue(
