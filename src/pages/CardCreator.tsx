@@ -5,18 +5,19 @@ import {
 	Card,
 	CardBody,
 	CardHeader,
-	Grid,
 	Flex,
 	Image,
 	List,
 	ListItem,
 	ListIcon,
 	Text,
-	Button,
+	Tooltip,
+	IconButton,
 	FormControl,
 	FormLabel,
-	Textarea,
+	Input,
 } from "@chakra-ui/react";
+import { RepeatClockIcon } from "@chakra-ui/icons";
 
 const stats = {
 	strength: 0,
@@ -29,7 +30,7 @@ const stats = {
 	vitality: 0,
 };
 
-export default function Game() {
+export default function CardCreator() {
 	return (
 		<Flex
 			align="center"
@@ -39,10 +40,19 @@ export default function Game() {
 			gap={4}
 			mx="auto"
 		>
-			<FormControl id="prompt">
-				<FormLabel>Prompt</FormLabel>
-				<Textarea />
-			</FormControl>
+			<Box w={["100%", "50%"]}>
+				<FormControl id="prompt">
+					<FormLabel>Prompt</FormLabel>
+					<Input size={"lg"} />
+				</FormControl>
+				<Tooltip label="Auto generate card stats">
+					<IconButton
+						aria-label="Auto Generate"
+						icon={<RepeatClockIcon />}
+						onClick={() => {}}
+					/>
+				</Tooltip>
+			</Box>
 			<VStack alignItems={["center", "flex-start"]} spacing={4}>
 				<Text>Card preview:</Text>
 				<Card>
