@@ -4,17 +4,19 @@ import {
 	HStack,
 	IconButton,
 	useDisclosure,
-	useColorModeValue,
 	Stack,
 	Spinner,
+	useColorModeValue,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 import { AuthLoading, Authenticated, Unauthenticated } from "convex/react";
 import { UserButton, SignInButton, SignOutButton } from "@clerk/clerk-react";
+import { dark } from "@clerk/themes";
 
 import { Outlet } from "react-router-dom";
 
+import ThemeToggle from "./ThemeToggle";
 interface Props {
 	children: React.ReactNode;
 }
@@ -71,13 +73,22 @@ export default function Nav() {
 							))}
 						</HStack>
 					</HStack>
-					<Flex alignItems={"center"}>
+					<Flex alignItems={"center"} gap={4}>
+						<ThemeToggle />
 						<AuthLoading>
 							<Spinner />
 						</AuthLoading>
 						<Authenticated>
-							<UserButton />
 							<SignOutButton />
+
+							<UserButton
+								appearance={{
+									baseTheme: useColorModeValue(
+										undefined,
+										dark
+									),
+								}}
+							/>
 						</Authenticated>
 						<Unauthenticated>
 							<SignInButton />
