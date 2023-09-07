@@ -26,9 +26,28 @@ export const InsertCard = mutation({
 			endurance,
 			luck,
 			cost,
+			arcane,
+			vigor,
+			vitality,
 		}
 	) => {
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) {
+			throw new Error("Unathenticated to call mutation");
+		}
+		const user = await ctx.db
+			.query("users")
+			.withIndex("by_token", (q) =>
+				q.eq("tokenIdentifier", identity.tokenIdentifier)
+			)
+			.unique();
+
+		if (!user) {
+			throw new Error("User not found");
+		}
+
 		const newCardId = await ctx.db.insert("cards", {
+			user: user._id,
 			content,
 			image,
 			strenght,
@@ -36,6 +55,9 @@ export const InsertCard = mutation({
 			intelligence,
 			endurance,
 			luck,
+			arcane,
+			vigor,
+			vitality,
 			cost,
 		});
 		return newCardId;
