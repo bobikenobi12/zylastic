@@ -16,7 +16,7 @@ export default defineSchema({
 		vigor: v.number(),
 		vitality: v.number(),
 		cost: v.number(),
-	}),
+	}).index("by_user", ["user"]),
 	users: defineTable({
 		name: v.string(),
 		tokenIdentifier: v.string(),
