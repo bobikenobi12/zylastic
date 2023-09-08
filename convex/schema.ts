@@ -4,9 +4,9 @@ import { v } from "convex/values";
 export default defineSchema({
 	cards: defineTable({
 		user: v.id("users"),
-		// id: v.number(),
 		content: v.string(),
 		image: v.string(),
+		prompt: v.string(),
 		strenght: v.number(),
 		dexterity: v.number(),
 		intelligence: v.number(),

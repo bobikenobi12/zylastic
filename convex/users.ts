@@ -1,4 +1,5 @@
-import { mutation } from "./_generated/server";
+import { Id } from "./_generated/dataModel";
+import { internalQuery, mutation } from "./_generated/server";
 
 /**
  * Insert or update the user in a Convex table then return the document's ID.
@@ -37,3 +38,24 @@ export const store = mutation(async ({ db, auth }) => {
 		tokenIdentifier: identity.tokenIdentifier,
 	});
 });
+
+export const getUser = internalQuery(
+	async ({ db, auth }): Promise<Id<"users">> => {
+		const identity = await auth.getUserIdentity();
+		if (!identity) {
+			throw new Error("Called getUser without authentication present");
+		}
+		return db
+			.query("users")
+			.withIndex("by_token", (q) =>
+				q.eq("tokenIdentifier", identity.tokenIdentifier)
+			)
+			.unique()
+			.then((user) => {
+				if (!user) {
+					throw new Error("User not found");
+				}
+				return user._id;
+			});
+	}
+);

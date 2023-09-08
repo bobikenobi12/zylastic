@@ -1,36 +1,9 @@
-import { mutation } from "./_generated/server";
-import { v } from "convex/values";
+import { Id } from "./_generated/dataModel";
+import { internalMutation, mutation } from "./_generated/server";
 
 export const InsertCard = mutation({
-	args: {
-		content: v.string(),
-		image: v.string(),
-		strenght: v.number(),
-		dexterity: v.number(),
-		intelligence: v.number(),
-		endurance: v.number(),
-		luck: v.number(),
-		arcane: v.number(),
-		vigor: v.number(),
-		vitality: v.number(),
-		cost: v.number(),
-	},
-	handler: async (
-		ctx,
-		{
-			content,
-			image,
-			strenght,
-			dexterity,
-			intelligence,
-			endurance,
-			luck,
-			cost,
-			arcane,
-			vigor,
-			vitality,
-		}
-	) => {
+	args: {},
+	handler: async (ctx, {}) => {
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) {
 			throw new Error("Unathenticated to call mutation");
@@ -48,18 +21,33 @@ export const InsertCard = mutation({
 
 		const newCardId = await ctx.db.insert("cards", {
 			user: user._id,
-			content,
-			image,
-			strenght,
-			dexterity,
-			intelligence,
-			endurance,
-			luck,
-			arcane,
-			vigor,
-			vitality,
-			cost,
+			content: "",
+			image: "",
+			prompt: "",
+			strenght: 0,
+			dexterity: 0,
+			intelligence: 0,
+			endurance: 0,
+			luck: 0,
+			arcane: 0,
+			vigor: 0,
+			vitality: 0,
+			cost: 0,
 		});
+
 		return newCardId;
 	},
 });
+
+export const sendDallEMessage = internalMutation(
+	async (
+		ctx,
+		{
+			body,
+			card,
+			prompt,
+		}: { body: string; card: Id<"cards">; prompt: string }
+	) => {
+		await ctx.db.patch(card, { image: body, prompt });
+	}
+);
