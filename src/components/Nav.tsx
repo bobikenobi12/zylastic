@@ -104,7 +104,6 @@ export default function Nav() {
 					</Box>
 				) : null}
 			</Box>
-
 			<Outlet />
 		</>
 	);

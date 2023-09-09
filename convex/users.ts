@@ -15,7 +15,7 @@ import { internalQuery, mutation } from "./_generated/server";
 export const store = mutation(async ({ db, auth }) => {
 	const identity = await auth.getUserIdentity();
 	if (!identity) {
-		throw new Error("Called storeUser without authentication present");
+		return null;
 	}
 
 	// Check if we've already stored this identity before.

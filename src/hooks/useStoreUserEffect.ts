@@ -16,9 +16,10 @@ export default function useStoreUserEffect() {
 	// the current user in the `users` table and return the `Id` value.
 	useEffect(() => {
 		// If the user is not logged in don't do anything
-		if (!isAuthenticated) {
-			return;
-		}
+		// if (!isAuthenticated) {
+		// 	console.log("not authenticated");
+		// 	return;
+		// }
 		// Store the user in the database.
 		// Recall that `storeUser` gets the user information via the `auth`
 		// object on the server. You don't need to pass anything manually here.

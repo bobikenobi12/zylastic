@@ -7,7 +7,10 @@ import { internal } from "./_generated/api";
 import { Id } from "./_generated/dataModel";
 
 export const send = action(
-	async (ctx, { prompt, card }: { prompt: string; card: Id<"cards"> }) => {
+	async (
+		ctx,
+		{ prompt, cardId }: { prompt: string; cardId: Id<"cards"> }
+	) => {
 		const apiKey = process.env.OPENAI_API_KEY;
 		if (!apiKey) {
 			throw new Error(
@@ -51,7 +54,7 @@ export const send = action(
 		// Write storageId as the body of the message to the Convex database.
 		await ctx.runMutation(internal.cards.sendDallEMessage, {
 			body: storageId,
-			card,
+			cardId,
 			prompt,
 		});
 	}
